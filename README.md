@@ -43,8 +43,8 @@ To execute the playbooks, you will need to follow these steps:
 4. Update the inventory file to provide the access information for UCSM and ESXi host information
 5. Update variables in group_vars/all.yml to match your environment
 6. Execute the Setup_UCS.yml playbook to setup all the policies and server profile templates `ansible-playbook ./Setup_UCS.yml -i inventory`
-7. Manually derive 4 server profiles
-8. Install ESXi on the 4 servers and configure the management interface to access ESXi hosts
+7. Manually derive 4 Service Profiles to deploy 4 VCF Mgmt Host servers
+8. Install ESXi on the 4 servers and configure the management interface to be able to access ESXi hosts
 9. Execute the prepare_esxi_host.yml playbook to prep the ESXi hosts `ansible-playbook ./prepare_esxi_hosts.yml -i inventory`
 10. Regenerate the self signed certificates on all 4 ESXi hosts manually or use the playbook: `ansible-playbook ./regenerate_esxi_hosts_certs.yml -i inventory`
 
