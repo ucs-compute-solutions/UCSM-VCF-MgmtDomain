@@ -22,6 +22,7 @@ After running the ESXi playbooks, log into each ESXi host using SSH and re-gener
 /sbin/generate-certificates
 /etc/init.d/hostd restart && /etc/init.d/vpxa restart
 ```
+__Note__ An Ansible playbook _regenerate_esxi_hosts_certs.yml_ has also been provided to re-generate the certificates. 
 The ESXi hosts are now ready for VCF cloud builder configuration. 
 
 # Execution Package Requirement
