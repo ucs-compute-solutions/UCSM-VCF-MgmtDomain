@@ -1,0 +1,60 @@
+---
+# Playbook to setup UCS configurations
+#
+- hosts: ucs
+  connection: local
+  collections:
+  - cisco.ucs
+  gather_facts: no
+
+  roles:
+
+    ### Setup *** Equipment ***  tasks in UCSM
+    #
+    # Enable server auto-discovery policy
+    # Setup Server Ports to connect to Rack Servers
+    # Setup Uplink Ports and Port-Channels
+    #
+    # Variables can be found under group_vars/all.yml
+    - UCSequipment
+    #
+    ### Setup *** Admin *** tasks in UCSM
+    #
+    # DNS Configuration (optional - can be skipped)
+    # Timezone (optional - can be skipped)
+    # NTP server (optional - can be skipped)
+    # Organization - for defining UCS policies under defined org
+    #
+    # To configure the "optional" parameters, uncomment and update the variables
+    # under group_vars/all.yml. To not use the optional component, comment the variables
+    - UCSadmin
+    #
+    ### Setup *** LAN *** tasks in UCSM
+    #
+    # Mgmt IP Pool
+    # VLANs
+    # MAC pools
+    # Network Control Policy - Enable CDP and LLDP
+    # VMware Adapter Policy for High Traffic
+    # vNIC templates
+    # LAN connectivity Policy
+    #
+    # Variables that customers need to update (mac pools, vlans, mgmt IP rancge) are defined in group_vars/all.yml
+    # Not so common variables such as VLAN assignment to vNICs, policies etc. are defined
+    # in roles/UCSlan/defaults/main.yml
+    - UCSlan
+    #
+    ### Setup *** Server *** tasks in UCSM
+    #
+    # UUID pools
+    # Server Pool Configuration
+    # Power Control Policy - No Power CAP
+    # Modify default Maintenence policy - Add User Ack for reboot
+    # Local Disk Policy - Ignore Local Disks
+    # BIOS Policy
+    # Local Boot Policy to boot ESXi from local (M.2) drive
+    #
+    # Variables that customers need to update are defined in group_vars/all.yml
+    # Not so common variables are defined
+    # in roles/UCSServer/defaults/main.yml
+    - UCSserver
