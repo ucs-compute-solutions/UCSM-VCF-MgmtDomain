@@ -1,4 +1,9 @@
 ---
+#
+# Set Jumbo MTU on vSwitch
+# Set default port-group VLAN to in-band management VLAN
+# vCenter is deployes in the VLAN we set here
+#
   - name: Update MTU to 9000 on vSwitch0
     vmware_vswitch:
       hostname: '{{ inventory_hostname }}'
