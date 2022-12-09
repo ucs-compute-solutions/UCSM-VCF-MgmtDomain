@@ -1,4 +1,8 @@
 ---
+#
+# Enable SSH on ESXi
+# SSH allows us to connect to ESXi server and re-generate certs 
+#
   - name: Enable ESXi SSH servive
     vmware_host_service_manager:
       hostname: '{{ inventory_hostname }}'
