@@ -1,4 +1,8 @@
 ---
+#
+# Set NTP server
+# Enable NTP Service
+#
   - name: Configure ESXi NTP server
     vmware_host_ntp:
       hostname: '{{ inventory_hostname }}'
