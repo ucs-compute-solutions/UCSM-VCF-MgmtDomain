@@ -1,0 +1,22 @@
+---
+  # Configure Service Profile Templates for iSCSI or FC
+  # if configure_iscsi and/or configure_fc are set
+
+  # iSCSI Service Profile Template
+  #
+  - name: Configure Service Profile Template
+    ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ SPT_name }}"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ lan_conn_policy }}"
+      boot_policy: "{{ boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      bios_policy: "{{ bios_policy_name}}"

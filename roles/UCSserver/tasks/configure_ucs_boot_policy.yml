@@ -1,0 +1,65 @@
+---
+  # Configure Local Boot Policy to boot from Local Disk
+  #
+  # Local Boot Policy
+  #
+  - name: Create Local Boot Policy
+    ucs_managed_objects:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      objects:
+        - {
+            "module": "ucsmsdk.mometa.lsboot.LsbootPolicy",
+            "class": "LsbootPolicy",
+            "properties": {
+                "parent_mo_or_dn": "org-root/org-{{ organization}}",
+                "name": "{{ boot_policy_name }}",
+                "enforce_vnic_name": "yes",
+                "boot_mode": "uefi",
+                "reboot_on_update": "no"
+            },
+            "children": [
+              {
+                  "module": "ucsmsdk.mometa.lsboot.LsbootVirtualMedia",
+                  "class": "LsbootVirtualMedia",
+                  "properties": {
+                      "access": "read-only-remote",
+                      "lun_id": "0",
+                      "order": "1"
+                  }
+              },
+              {
+                  "module": "ucsmsdk.mometa.lsboot.LsbootVirtualMedia",
+                  "class": "LsbootVirtualMedia",
+                  "properties": {
+                      "access": "read-only-remote-cimc",
+                      "lun_id": "0",
+                      "order": "2"
+                  }
+              },
+              {
+                  "module": "ucsmsdk.mometa.lsboot.LsbootStorage",
+                  "class": "LsbootStorage",
+                  "properties": {
+                      "order": "3"
+                  },
+                  "children": [
+                      {
+                          "module": "ucsmsdk.mometa.lsboot.LsbootLocalStorage",
+                          "class": "LsbootLocalStorage",
+                          "properties": {},
+                          "children": [
+                            {
+                              "module": "ucsmsdk.mometa.lsboot.LsbootDefaultLocalImage",
+                              "class": "LsbootDefaultLocalImage",
+                              "properties": {
+                                  "order": "3"                            
+                              }
+                            }                          
+                          ]
+                      }
+                    ]
+              }
+            ]
+          }

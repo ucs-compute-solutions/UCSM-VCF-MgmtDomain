@@ -1,0 +1,72 @@
+---
+# Variables for LAN configurations of UCSM
+# Adjust the variable values as per your requirements
+
+#lan_state should be set to 'present' to configure the objects and 'absent' to delete the object.
+# In this current framework, this feature is not tested. The value MUST be set to 'present'
+lan_state : 'present'
+#Assignment order for various IP and MAC pools
+lan_assign_order: 'sequential'
+#
+# VLANs for VDS1 vNIC Template (All traffic except NSX Host Overlay - Profile-3)
+#
+VDS01_vlan_list:
+    # Native VLAN
+  - name: "{{ native_vlan_name }}"
+    native: 'yes'
+    # MGMT VLANs
+  - name: "{{ oob_vlan_name }}"
+    native: 'no'
+  - name: "{{ ib_vlan_name }}"
+    native: 'no'
+    # vSAN VLAN
+  - name: "{{ vsan_vlan_name }}"
+    native: 'no'
+    # vMotion VLAN
+  - name: "{{ vmotion_vlan_name }}"
+    native: 'no'
+#
+# VLANs for VDS2 vNIC Template (VSAN traffic only - Profile-3)
+#
+VDS02_vlan_list:
+    # Native VLAN
+  - name: "{{ native_vlan_name }}"
+    native: 'yes'
+    # Host Overlay VLAN
+  - name: "{{ overlay_vlan_name }}"
+    native: 'no'
+#
+#Network Control Policy
+NCP_name: Enable-CDP-LLDP
+NCP_cdp: 'enabled'
+NCP_lldp: 'enabled'
+#
+#
+Mac_Pool_A_Name: "{{ mac_pool_list[0].name }}"
+Mac_Pool_B_Name: "{{ mac_pool_list[1].name }}"
+
+vnic_template_list:
+  - name: 'VDS01-A'
+    fabric: 'A'
+    mac_pool: "{{ Mac_Pool_A_Name }}"
+    redundancy_type: 'primary'
+    redundant_peer: 'VDS01-B'
+    vlans: "{{ VDS01_vlan_list }}"
+  - name: 'VDS01-B'
+    fabric: 'B'
+    mac_pool: "{{ Mac_Pool_B_Name }}"
+    redundancy_type: 'secondary'
+    redundant_peer: 'VDS01-A'
+    vlans: "{{ VDS01_vlan_list }}"    
+  - name: 'VDS02-A'
+    fabric: 'A'
+    mac_pool: "{{ Mac_Pool_A_Name }}"
+    redundancy_type: 'primary'
+    redundant_peer: 'VDS02-B'
+    vlans: "{{ VDS02_vlan_list }}"
+  - name: 'VDS02-B'
+    fabric: 'B'
+    mac_pool: "{{ Mac_Pool_B_Name }}"
+    redundancy_type: 'secondary'
+    redundant_peer: 'VDS02-A'
+    vlans: "{{ VDS02_vlan_list }}"

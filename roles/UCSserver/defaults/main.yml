@@ -1,0 +1,54 @@
+---
+# Variables for Server configurations of UCSM
+# Adjust the variable values as per your requirements
+#
+# Server Pool Information
+server_pool_name: 'Infra-Pool'
+#
+# Power Control Policy
+power_policy_name: 'No-PowerCap'
+#
+# Local Disk Policy
+local_disk_policy_name: 'LocalDiskBoot'
+local_disk_mode: 'any-configuration'
+#
+# BIOS Policy
+bios_policy_name: 'VM-Host'
+bios_setting_list:
+  - name: 'Enable CDN Control'
+    mo_token: 'tokn-featr-Consistent Device Name Control/tokn-param-cdnEnable'
+    mo_setting: 'Enabled'
+  - name: 'Disable Quiet Boot'
+    mo_token: 'tokn-featr-Quiet Boot/tokn-param-QuietBoot'
+    mo_setting: 'Disabled'
+  - name: 'DRAM Clock Throttling - Performance'
+    mo_token: 'tokn-featr-DRAM Clock Throttling/tokn-param-DRAMClockThrottling'
+    mo_setting: 'Performance'
+  - name: 'Frequency Floor Override - Enabled'
+    mo_token: 'tokn-featr-Frequency Floor Override/tokn-param-CpuFreqFloor'
+    mo_setting: 'Enabled'
+  - name: 'Processor C state - Disabled'
+    mo_token: 'tokn-featr-Processor C State/tokn-param-ProcessorCstate'
+    mo_setting: 'Disabled'
+  - name: 'Processor C1E - Disabled'
+    mo_token: 'tokn-featr-Processor C1E/tokn-param-ProcessorC1E'
+    mo_setting: 'Disabled'
+  - name: 'Processor C3 Report - Disabled'
+    mo_token: 'tokn-featr-Processor C3 Report/tokn-param-ProcessorC3Report'
+    mo_setting: 'Disabled'
+  - name: 'Processor C7 Report - Disabled'
+    mo_token: 'tokn-featr-Processor C7 Report/tokn-param-ProcessorC7Report'
+    mo_setting: 'Disabled'
+  - name: 'Processor Energy Configuration - Performance'
+    mo_token: 'tokn-featr-Processor Energy Configuration/tokn-param-CpuEngPerfBias'
+    mo_setting: 'Performance'
+  - name: 'LV DDR Mode - Performance-Mode'
+    mo_token: 'tokn-featr-LvDIMM Support/tokn-param-LvDDRMode'
+    mo_setting: 'Performance-Mode'
+#
+# Local Boot Policy
+boot_policy_name: 'Local-Boot'
+#
+# Service Profile Template
+SPT_name: 'VCF-Host'
+#
