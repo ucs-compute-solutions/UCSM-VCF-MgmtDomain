@@ -1,0 +1,192 @@
+######################################################## 
+# Variables for *Equipment* Tab configurations of UCSM #
+########################################################
+# This is the list of all the C-Series server ports where rack servers are connected
+# The list contains both FI-A and FI-B connections
+server_port_list:
+# Rack Server Connections
+  - fabric_id: "A"
+    slot_id: '1'
+    port_id: '17'
+  - fabric_id: "A"
+    slot_id: '1'
+    port_id: '18'
+  - fabric_id: "A"
+    slot_id: '1'
+    port_id: '19'
+  - fabric_id: "A"
+    slot_id: '1'
+    port_id: '20'
+  - fabric_id: "B"
+    slot_id: '1'
+    port_id: '17'
+  - fabric_id: "B"
+    slot_id: '1'
+    port_id: '18'
+  - fabric_id: "B"
+    slot_id: '1'
+    port_id: '19'
+  - fabric_id: "B"
+    slot_id: '1'
+    port_id: '20'
+#    
+# This is the list for Port-Channel Configuration Parameters including uplink ports
+# admin_speed can be hard coded to "40gbps", "100gbps" (default to match Nexus Config) or "auto".
+#
+port_channel_list:
+  - name: "Po13-Nexus"
+    pc_id: '13'
+    fabric_id: "A"
+    slot_id: '1'
+    port_id: '39'
+    admin_speed: "40gbps"
+  - name: "Po13-Nexus"
+    pc_id: '13'
+    fabric_id: "A"
+    slot_id: '1'
+    port_id: '40'
+    admin_speed: "40gbps"
+  - name: "Po14-Nexus"
+    pc_id: '14'
+    fabric_id: "B"
+    slot_id: '1'
+    port_id: '39'
+    admin_speed: "40gbps"
+  - name: "Po14-Nexus"
+    pc_id: '14'
+    fabric_id: "B"
+    slot_id: '1'
+    port_id: '40'
+    admin_speed: "40gbps"
+#
+#################################################### 
+# Variables for *Admin* Tab configurations of UCSM #
+####################################################
+#
+# UCS Organization
+organization: 'AA01-VCF'
+
+# Comment/Uncomment and update the the following lines to setup or ignote NTP Server(s)
+ntp_servers:
+  - ip_address: "172.20.10.11"
+#  - ip_address: "172.20.10.15"
+
+# Comment/Uncomment and update the the following line to setup Timezone
+time_zone: 'America/New_York'
+
+# Comment/Uncomment and update the the following line to setup DNS Servers
+dns_server_ip:
+  - 10.101.1.53
+  - 10.101.1.54
+
+# The domain name to be configured
+dns_domain: "vcf.local"
+
+################################################## 
+# Variables for *LAN* Tab configurations of UCSM #
+##################################################
+
+#Management IP address Pool configuration
+mgmt_pool_name: "ext-mgmt"
+mgmt_first_ip: '10.101.0.241'
+mgmt_last_ip: '10.101.0.248'
+mgmt_subnet_mask: '255.255.255.0'
+mgmt_default_gw: '10.101.0.254'
+#
+# MAC Address Pool information for Fabric-A and B
+#
+mac_pool_list:
+  - name: MAC-Pool-A
+    first_mac: 00:25:B5:01:0A:00
+    last_mac: 00:25:B5:01:0A:3F
+  - name: MAC-Pool-B
+    first_mac: 00:25:B5:01:0B:00
+    last_mac: 00:25:B5:01:0B:3F
+
+# This is the list of all the VLANs that will be defined UCS
+# VLAN Names are adjustable and can be modified here
+#
+native_vlan_name: 'native_vlan' # Native VLAN
+oob_vlan_name: '10_101_0_net' # Out of Band Mgmt VLAN
+ib_vlan_name: '10_101_1_net' # IN BAND Management VLAN
+vsan_vlan_name: 'vsan_vlan' # VLAN to carry vSAN traffic
+vmotion_vlan_name: 'vmotion_vlan' # vMotion VLAN
+overlay_vlan_name: 'host_overlay' # NFS Traffic between ESXi and Storage
+#
+# lan_state should be set to 'present' to configure the objects
+# In future, this parameter will be used for deleting the configuration
+#
+lan_state : 'present'
+#
+vlan_list:
+  - name: "{{ native_vlan_name }}"
+    id: '2'
+    native: 'yes'
+    state: "{{lan_state}}"
+  - name: "{{ oob_vlan_name }}"
+    id: '1010'
+    native: 'no'
+    state: "{{lan_state}}"
+  - name: "{{ ib_vlan_name }}"
+    id: '1011'
+    native: 'no'
+    state: "{{lan_state}}"
+  - name: "{{ vsan_vlan_name }}"
+    id: '3001'
+    native: 'no'
+    state: "{{lan_state}}"
+  - name: "{{ vmotion_vlan_name }}"
+    id: '3030'
+    native: 'no'
+    state: "{{lan_state}}"
+  - name: "{{ overlay_vlan_name }}"
+    id: '3002'
+    native: 'no'
+    state: "{{lan_state}}"
+#
+# VLANs definition below will be used to setup trunk ports on Nexus Switches
+# all_vlans_list: for vpc_peer_link and UCS FI trunk ports
+all_vlans_list: "1010,1011,3030,3001,3002"
+# mgmt_vlans_list: for management switch trunk port
+mgmt_vlans_list: "1010,1011"
+#
+native_vlan_id: "2"
+#
+# VMware High Traffic Adapter Policy
+adapter_policy_name: 'VMware-HighTrf'
+# LAN Connectivity Policy Parameters
+lan_conn_policy: 'VCF-LanConn'
+
+##################################################### 
+# Variables for *Server* Tab configurations of UCSM #
+#####################################################
+
+# Assignment order for Server Pool 
+server_assign_order: 'sequential'
+# To add or remove certain parameters
+server_state: 'present'
+
+# UUID Pool Information
+uuid_pool_name: UUID-Pool
+uuid_start: '0000-000001000001'
+uuid_end: '0000-000001000020'
+
+# Adjust the Rack IDs to assign racks to the server pools
+# Add additional servers to the list using the same format.
+#
+# C-Series Rack Servers
+rack_list:
+  - id: '1'
+  - id: '2'
+  - id: '3'
+  - id: '4'
+
+############################################# 
+# Variables for Initial ESXi configurations #
+#############################################
+#
+# Management VLAN where vCenter will be deployed
+# This VLAN is configured on the default port-group of the vSwitch0
+# DNS and NTP servers are defined and used from the UCSadmin section above
+#
+WD_mgmt_VLAN: 1011
