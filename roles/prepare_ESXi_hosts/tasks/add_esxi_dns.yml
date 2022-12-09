@@ -1,4 +1,9 @@
 ---
+#
+# Set hostname from inventory file
+# Set domain name
+# Set DNS server IP address
+#
   - name: Configure ESXi hostname and DNS servers
     vmware_host_dns:
       hostname: '{{ inventory_hostname }}'
