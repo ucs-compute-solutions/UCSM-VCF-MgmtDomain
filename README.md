@@ -36,7 +36,7 @@ All the variables used in this framework are defined in the following locations:
 - Variable that do not typically require customer input (e.g. VLAN assignment to VDS or policy names) are present under role_name/defauls/main.yml.
 
 # Playbook Execution
-To execute the playbook, you will need to follow these steps:
+To execute the playbooks, you will need to follow these steps:
 1. Physically connect the hardware and perform the initial configuration so UCS can be accessed over network using its management IP address
 2. Setup a Linux (or similar) host and install Ansible, git and required UCS and VMware packages
 3. Clone the repository using git
