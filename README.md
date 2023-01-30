@@ -1,3 +1,4 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/ucs-compute-solutions/UCSM-VCF-MgmtDomain)
 # VMware Cloud Foundation management domain host setup for Cisco UCSM rack server
 This repository contains Ansible playbooks for configuring Cisco UCSM managed C-Series (tested Cisco UCS C240 M5) servers. This repository aligns with the following design guide: https://www.cisco.com/c/en/us/td/docs/unified_computing/ucs/UCS_CVDs/flexpod_vcf_design.html. This repository can be used to setup UCS policies and Service Profile Templates as well as to perform initial configuration of the ESXi hosts for deploying VCF using Cloud Builder. To run these playbooks, Cisco UCS C-Series servers should be connected via Cisco UCS Fabric Interconnects as shown in the figure.
 
